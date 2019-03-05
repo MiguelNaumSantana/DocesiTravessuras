@@ -103,7 +103,8 @@ class DashboardController extends Controller
         
         
         foreach($produtoVendas as $produtoVenda){
-             array_push($totalCompra,$produtoVenda->preco_venda*$produtoVenda->quantidade);
+            
+             array_push($totalCompra,$produtoVenda->preco_venda*$produtoVenda->quantidade-$produtoVenda->desconto);
             
         }
         return array_sum($totalCompra);
