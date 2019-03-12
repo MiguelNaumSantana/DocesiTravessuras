@@ -25,7 +25,8 @@ Route::group(['middleware'=>['auth']],function(){
     Route::resource('categorias', 'CategoriaController');
     Route::resource('vendas', 'VendaController');
     Route::resource('promocao', 'PromocaoController');
-    Route::get('/produtosall/{$id}', 'ProdutoController@todosProdutos');
+    Route::get('venda-rapida', 'VendaController@rapida');
+    
     
 });
 

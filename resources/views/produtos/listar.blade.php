@@ -33,6 +33,7 @@
                     <th class="" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 322px;">Preco compra</th>
                     <th class="" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 257px;">preço venda</th>
                     <th class="" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 190px;">Estoque</th>
+                    <th class="" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 190px;">_\|/_</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -47,6 +48,11 @@
                     <td>{{$produto->preco_compra}}</td>
                     <td>{{$produto->preco_venda}}</td>
                     <td>{{$produto->estoque}}</td>
+                    <td>
+                   
+                  <a href="{{ route('produtos.edit', $produto->id) }}" class="btn btn-primary">Editar</a>
+				</td>
+                
                     
                     
                     

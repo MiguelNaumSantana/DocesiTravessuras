@@ -139,5 +139,14 @@ class VendaController extends Controller
         //
     }
     
+    public function rapida()
+    
+    {
+      return view("vendas.vendarapida");
+      
+      
+      
+    }
+    
     
 }

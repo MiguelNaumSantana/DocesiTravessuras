@@ -20,7 +20,7 @@ class DashboardController extends Controller
     public function index()
     {
        //$this->totalemvendas();
-       
+       echo now();die;
        return view("dashboard.dashboard");
     }
 

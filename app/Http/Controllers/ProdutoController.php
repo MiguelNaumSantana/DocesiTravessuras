@@ -50,7 +50,7 @@ class ProdutoController extends Controller
        $preco_entrada= str_replace( ",", ".",$request->preco_entrada,);
        $preco_venda= str_replace( ",", ".",$request->preco_venda);
        
-       //dd($preco_entrada);
+      // dd($request->categoria);
         $produtos = produto::create([
             'nome'=>$request->nome,
             'descricao'=>$request->descricao,
@@ -82,7 +82,15 @@ class ProdutoController extends Controller
      */
     public function edit($id)
     {
-        //
+       $produto = produto::find($id);
+        $categorias = categoria::all();
+        $select = [];
+        foreach($categorias as $categoria){
+          
+        $select[$categoria->id] = $categoria->nome; 
+
+    }
+     return view("produtos.edit",compact("produto","select"));
     }
 
     /**
@@ -94,7 +102,12 @@ class ProdutoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $reqprod=$request->all();
+        //dd($reqprod);
+        $produto=produto::findOrFail($id);
+        $teste=$produto->update($reqprod);
+        //dd($teste);
+        return $this->index();
     }
 
     /**

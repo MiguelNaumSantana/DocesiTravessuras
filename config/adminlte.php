@@ -150,7 +150,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Listar',
-                    'url'  => '#',
+                    'url'  => 'categorias',
                 ],
                 [
                     'text' => 'Cadastrar',
@@ -170,6 +170,10 @@ return [
                 [
                     'text' => 'Vender',
                     'url'  => 'vendas/create',
+                ],
+                [
+                    'text' => 'Venda Rápida',
+                    'url'  => 'venda-rapida',
                 ],
                
 

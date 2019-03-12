@@ -8,7 +8,7 @@ use App\Venda;
 class Produto extends Model
 {
     public $timestamps = false;
-    protected $fillable = ['nome','descricao','categoria','preco_compra','preco_venda','estoque'];
+    protected $fillable = ['nome','descricao','categorias_id','preco_compra','preco_venda','estoque'];
     
     
     public function vendas()
