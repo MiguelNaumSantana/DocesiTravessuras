@@ -9,6 +9,7 @@ use App\Venda;
 use App\ProdutosVendas;
 use App\Produto;
 use Carbon\Carbon ;
+use DB;
 
 class DashboardController extends Controller
 {
@@ -19,9 +20,21 @@ class DashboardController extends Controller
      */
     public function index()
     {
-       //$this->totalemvendas();
-       echo now();die;
-       return view("dashboard.dashboard");
+        /*
+            Necessiade de refatorar essa função
+        */
+         $data = Carbon::today();
+         $produtosVendidos = $this->prodvendidos($data);
+         $totalEmVendas = $this->totalemvendas($data);
+         $totalEmProdutos = $this->totalprodutos();
+         $fluxocaixa = $this->fluxocaixa($data);
+         $fluxoCaixaEntrada = $fluxocaixa["entrada"];
+         $fluxoCaixaSaida = $fluxocaixa["saida"];
+         $caixa = $this->caixa();
+         return view('dashboard.dashboard',compact("totalEmVendas","fluxoCaixaEntrada","fluxoCaixaSaida","data","caixa","produtosVendidos"));
+       
+       
+       
     }
 
     /**
@@ -90,6 +103,11 @@ class DashboardController extends Controller
         //
     }
     
+    /*
+        Lista o total em vendas no dia
+    
+    */
+    
     public function totalemvendas($data = null)
     {
         if($data)
@@ -110,23 +128,30 @@ class DashboardController extends Controller
         return array_sum($totalCompra);
     }
     
+    /*
     
+        Total em Produtos, tanto o valor de compra quanto o valor de venda;
+    
+    
+    */
     public function totalprodutos()
     {
         $produtos = Produto::all();
         $totalProdutosCompra= [];
         $totalProdutosVenda=[];
-        
         foreach($produtos as $totalProduto){
             array_push($totalProdutosCompra,$totalProduto->preco_compra*$totalProduto->estoque);
             array_push($totalProdutosVenda,$totalProduto->preco_venda*$totalProduto->estoque);
         }
-       
-       
         $total = ["compra"=>array_sum($totalProdutosCompra),"venda"=>array_sum($totalProdutosVenda)];
         return $total;
         
     }
+    
+    /*
+        Fluxo de caixa, função que administra a entrada e saída de caixa
+    
+    */
     
     public function fluxocaixa($data = null)
     {
@@ -143,10 +168,7 @@ class DashboardController extends Controller
         $entrada = [];
         $saidaArray = [];
         $saida =[];
-        //dd($ultimos);
-        
         foreach($ultimos as $ultimo){
-            //dd($ultimo->valor);
             if($ultimo->tipo_fluxos_id == 1){
                 $entrada = array_push($entradaArray,$ultimo->valor);
             }
@@ -155,12 +177,15 @@ class DashboardController extends Controller
             }
             
         }
-        
-        
         $total = ["entrada"=>array_sum($entradaArray),"saida"=>array_sum($saidaArray)];
         return $total;
         
     }
+    
+    /*
+        Mostra o total em caixa
+    
+    */
     
     public function caixa()
     {
@@ -169,21 +194,38 @@ class DashboardController extends Controller
            $caixa = ($fluxocaixa["entrada"] + $totalVendas)-$fluxocaixa["saida"];
            return $caixa;
     }
+    /*
+        Lista todos os produtos vendidos no dia por quantidade
     
-    public function relatoriodia(Request $request)
+    */
+    public function prodvendidos($data = null)
+    {
+        
+        $produtoVenda = DB::table('produtos_vendas')
+                        ->select(DB::raw("nome,SUM(quantidade) as quantidade"))
+                        ->whereDate('created_at',$data)
+                        ->groupBy(DB::raw("produtos_id"))
+                        ->join('produtos','produtos.id','=','produtos_id')
+                        ->orderby('quantidade','desc')->get();
+
+        return $produtoVenda;
+        
+        
+    }
+    /*
+        Chama todas as funções do relatorio para enviar a view
+    
+    */
+    public function relatoriodia(Request $request )
     {
          $data = $request->data;
+         $produtosVendidos = $this->prodvendidos($data);
          $totalEmVendas = $this->totalemvendas($request->data);
          $totalEmProdutos = $this->totalprodutos();
          $fluxocaixa = $this->fluxocaixa($request->data);
          $fluxoCaixaEntrada = $fluxocaixa["entrada"] ;
          $fluxoCaixaSaida = $fluxocaixa["saida"];
-        // dd($fluxocaixa);
          $caixa = $this->caixa();
-         //dd($caixa);
-         
-         return view('dashboard.relatoriodia',compact("totalEmVendas","fluxoCaixaEntrada","fluxoCaixaSaida","data","caixa"));
-         
-        
+         return view('dashboard.relatoriodia',compact("totalEmVendas","fluxoCaixaEntrada","fluxoCaixaSaida","data","caixa","produtosVendidos"));
     }
 }

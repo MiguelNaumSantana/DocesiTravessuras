@@ -48,7 +48,7 @@
         </div>
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+            <span class="info-box-icon bg-aqua"><i class="fa fa-shopping-cart"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Total em Vendas</span>
@@ -61,7 +61,7 @@
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
+            <span class="info-box-icon bg-green"><i class="fa fa-arrow-circle-up"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Entrada de Caixa</span>
@@ -78,7 +78,7 @@
 
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+            <span class="info-box-icon bg-red"><i class="fa fa-arrow-circle-down"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Saída de Caixa</span>
@@ -91,7 +91,7 @@
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+            <span class="info-box-icon bg-yellow"><i class="fa  fa-money"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Saldo em caixa</span>
@@ -101,8 +101,38 @@
           </div>
           <!-- /.info-box -->
         </div>
-        <!-- /.col -->
-      </div>
+        </div>
+<div class="row">
+  
+  <div class="col-sm-12">
+                         <table id="example1" class="table table-bordered table-striped dataTable table-responsive" role="grid" aria-describedby="example1_info">
+                <thead>
+                <tr role="row">
+                    <th class="" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 297px;">Produto</th>
+                    <th class="" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 361px;">Quantidade de vendas</th>
+                    
+                </tr>
+                </thead>
+                <tbody>
+                    
+                    
+                    
+
+               @foreach($produtosVendidos as $prod)
+              
+                <tr role="row" class="odd">
+                    <td>{{$prod->nome}}</td>
+                    <td>{{$prod->quantidade}}</td>
+
+                </tr>
+                
+                 @endforeach
+              
+                </tbody>
+                
+                
+              </table></div></div>
+
 @stop
 
 @section('js')

@@ -98,7 +98,3 @@
 
 @section('js')
     <script src="https://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>  
-    <script>
-        $('.dinheiro').mask('#.##0,00', {reverse: true});
-    </script>
-@stop
