@@ -25,13 +25,14 @@ class DashboardController extends Controller
         */
          $data = Carbon::today();
          $produtosVendidos = $this->prodvendidos($data);
+         $lucrodia= $this->lucrodia($data);
          $totalEmVendas = $this->totalemvendas($data);
          $totalEmProdutos = $this->totalprodutos();
          $fluxocaixa = $this->fluxocaixa($data);
          $fluxoCaixaEntrada = $fluxocaixa["entrada"];
          $fluxoCaixaSaida = $fluxocaixa["saida"];
          $caixa = $this->caixa();
-         return view('dashboard.dashboard',compact("totalEmVendas","fluxoCaixaEntrada","fluxoCaixaSaida","data","caixa","produtosVendidos"));
+         return view('dashboard.dashboard',compact("totalEmVendas","fluxoCaixaEntrada","fluxoCaixaSaida","data","caixa","produtosVendidos","lucrodia"));
        
        
        
@@ -101,6 +102,31 @@ class DashboardController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    public function lucrodia($data = null)
+    {
+          if($data)
+        {
+        $produtoVendas=ProdutosVendas::whereDate('created_at',$data)->get();
+        }else{
+            $produtoVendas=ProdutosVendas::all();
+        }
+        
+        $totalCompra=[];
+        
+        
+        foreach($produtoVendas as $produtoVenda){
+            
+             array_push($totalCompra,( $produtoVenda->preco_venda - $produtoVenda->preco_compra )*$produtoVenda->quantidade-$produtoVenda->desconto);
+            
+        }
+        
+        
+        return array_sum($totalCompra);
+        
+        
+        
     }
     
     /*
@@ -219,6 +245,7 @@ class DashboardController extends Controller
     public function relatoriodia(Request $request )
     {
          $data = $request->data;
+         $lucrodia= $this->lucrodia($data);
          $produtosVendidos = $this->prodvendidos($data);
          $totalEmVendas = $this->totalemvendas($request->data);
          $totalEmProdutos = $this->totalprodutos();
@@ -226,6 +253,6 @@ class DashboardController extends Controller
          $fluxoCaixaEntrada = $fluxocaixa["entrada"] ;
          $fluxoCaixaSaida = $fluxocaixa["saida"];
          $caixa = $this->caixa();
-         return view('dashboard.relatoriodia',compact("totalEmVendas","fluxoCaixaEntrada","fluxoCaixaSaida","data","caixa","produtosVendidos"));
+         return view('dashboard.relatoriodia',compact("totalEmVendas","fluxoCaixaEntrada","fluxoCaixaSaida","data","caixa","produtosVendidos","lucrodia"));
     }
 }

@@ -27,6 +27,7 @@ class CreateClientesTable extends Migration
             $table->date('dt_nascimento');
             $table->string('telefone');
             $table->boolean('fumante');
+            $table->boolean('ra')->nullable();
             $table->timestamps();
             $table->integer('tipo_clientes_id')->unsigned();
             

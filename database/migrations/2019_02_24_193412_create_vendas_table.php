@@ -25,6 +25,7 @@ class CreateVendasTable  extends Migration
             $table->integer('clientes_id')->unsigned()->nullable();
             $table->integer('tipo_vendas_id')->unsigned();
             
+            
             $table->foreign('clientes_id')
                   ->references('id')
                   ->on('clientes')

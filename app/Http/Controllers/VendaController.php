@@ -7,6 +7,8 @@ use App\Categoria;
 use App\Produto;
 use App\TipoVenda;
 use App\Venda;
+use App\Cliente;
+use App\Caderno;
 use Illuminate\Support\Facades\Redirect;
 
 class VendaController extends Controller
@@ -35,7 +37,10 @@ class VendaController extends Controller
      */
     public function create()
     {
-          $produtos = produto::all();
+        $clientes = Cliente::all();
+        //dd($cliente);
+        
+        $produtos = produto::all();
         $tipoVendas=TipoVenda::all();
          //$promocao = promocao::all();
         $select = [];
@@ -46,7 +51,7 @@ class VendaController extends Controller
         }
         //dd($select);
       
-        return view("vendas.create",compact("produtos","select"));
+        return view("vendas.create",compact("produtos","select","clientes"));
     }
 
     /**
@@ -57,7 +62,8 @@ class VendaController extends Controller
      */
     public function store(Request $request)
     {
-       // dd($request->all());
+        //dd($request->all());
+            
             $venda = Venda::create($request->all());
             $vendaSave = Venda::find($venda->id);
             
@@ -66,6 +72,7 @@ class VendaController extends Controller
             $precoCompra=$request->preco_compra;
             $precoVenda=$request->preco_venda;
             $desconto=$request->desconto;
+            
             for($i=0;$i<sizeof($produto_id);$i++){
             
                 $vendaSave->produtos()->attach($produto_id[$i],
@@ -82,6 +89,10 @@ class VendaController extends Controller
                 
           
             }
+            
+            if($request->tipo_vendas_id == 4){
+                $this->caderno($request->cliente_id,$vendaSave->id);
+            }
    
            if($vendaSave){
                
@@ -91,6 +102,17 @@ class VendaController extends Controller
             
 
         
+        
+    }
+    
+    public function caderno($cliente_id,$venda_id)
+    {
+        $caderno = Caderno::create([
+            'pago'=>0,
+            'clientes_id'=>$cliente_id,
+            'vendas_id'=>$venda_id
+        ]);
+        return redirect('vendas');
         
     }
 

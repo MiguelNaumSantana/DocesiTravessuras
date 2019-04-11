@@ -41,16 +41,16 @@
                     
                     
 
-                  @foreach($produtos as $produto)
+                  @foreach($cadernos as $caderno)
                 <tr role="row" class="odd">
-                    <td>{{$produto->nome}}</td>
-                    <td>{{$produto->categoria}}</td>
-                    <td>{{$produto->preco_compra}}</td>
-                    <td>{{$produto->preco_venda}}</td>
-                    <td>{{$produto->estoque}}</td>
+                    <td>{{$caderno->nome}}</td>
+                    <td>{{$caderno->categoria}}</td>
+                    <td>{{$caderno->preco_compra}}</td>
+                    <td>{{$caderno->preco_venda}}</td>
+                    <td>{{$caderno->estoque}}</td>
                     <td>
                    
-                  <a href="{{ route('produtos.edit', $produto->id) }}" class="btn btn-primary">Editar</a>
+                  <a href="{{ route('produtos.edit', $caderno->id) }}" class="btn btn-primary">Editar</a>
 				</td>
                 
                     

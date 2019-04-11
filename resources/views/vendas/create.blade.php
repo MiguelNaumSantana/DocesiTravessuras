@@ -77,6 +77,15 @@
               <!-- /.box-body -->
               <div class="box-footer">
                 
+                 <label>Cliente</label>
+                 <select name="cliente_id"  class="form-control select2 " style="width: 100%;" tabindex="-1" aria-hidden="true">
+                    
+                  @foreach($clientes as $cliente)
+                  
+                  <option value="{{$cliente->id}}" selected="selected">{{$cliente->nome}}</option>
+                  @endforeach
+                </select>
+                 
                  <label>Tipo de venda</label>
                  {{ Form::select('tipo_vendas_id',$select,null,['class'=>'form-control']) }}
                 

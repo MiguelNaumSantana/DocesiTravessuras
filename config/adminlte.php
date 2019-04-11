@@ -198,6 +198,25 @@ return [
             ],
             
         ],
+        'CLIENTES',
+        [
+            'text'    => 'CLIENTES',
+            'icon'    => 'share',
+            'submenu' => [
+                [
+                    'text' => 'LISTAR',
+                    'url'  => 'clientes',
+                ],
+                [
+                    'text' => 'CADERNO',
+                    'url'  => 'caderno',
+                ],
+                
+               
+
+            ],
+            
+        ],
         
         /*'LABELS',
         [

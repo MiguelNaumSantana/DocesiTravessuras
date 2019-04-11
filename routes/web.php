@@ -26,9 +26,15 @@ Route::group(['middleware'=>['auth']],function(){
     Route::resource('vendas', 'VendaController');
     Route::resource('promocao', 'PromocaoController');
     Route::get('venda-rapida', 'VendaController@rapida');
+    Route::get('clientes', 'ClienteController@index');
+    Route::resource('caderno', 'CadernoController');
+    
+    
     
     
 });
+Route::get('cadastro','ClienteController@create')->name('cadastro');
+Route::post('cadastrosalvar','ClienteController@store')->name('cadastrosalvar');
 
 Auth::routes();
 
